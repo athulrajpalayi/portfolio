@@ -1,0 +1,27 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - .env.production
+    depends_on:
+      - postgres
+    ports:
+      - "127.0.0.1:3001:3000"
+    command: >
+      sh -c "npm run db:push &&
+             npm run bootstrap:admin &&
+             npm run start"
+
+volumes:
+  postgres_data:

@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum AdminRoleName {
+  OWNER
+  EDITOR
+  AUDITOR
+}
+
+enum ContactStatus {
+  NEW
+  REVIEWING
+  RESPONDED
+  ARCHIVED
+}
+
+model AdminUser {
+  id             String            @id @default(cuid())
+  email          String            @unique
+  displayName    String
+  passwordHash   String
+  role           AdminRoleName
+  twoFactor      TwoFactorSecret?
+  sessions       Session[]
+  auditLogs      AuditLog[]
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+}
+
+model Session {
+  id         String   @id @default(cuid())
+  token      String   @unique
+  userId     String
+  user       AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+}
+
+model TwoFactorSecret {
+  id        String    @id @default(cuid())
+  secret    String
+  enabled   Boolean   @default(true)
+  userId    String    @unique
+  user      AdminUser @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+}
+
+model AuditLog {
+  id          String    @id @default(cuid())
+  title       String
+  detail      String
+  status      String
+  actorId     String?
+  actor       AdminUser? @relation(fields: [actorId], references: [id], onDelete: SetNull)
+  createdAt   DateTime  @default(now())
+}
+
+model SiteSetting {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  value       Json
+  updatedAt   DateTime @updatedAt
+  createdAt   DateTime @default(now())
+}
+
+model LandingSection {
+  id          String   @id @default(cuid())
+  key         String   @unique
+  title       String
+  description String
+  order       Int
+  visible     Boolean  @default(true)
+  payload     Json
+}
+
+model Project {
+  id          String          @id @default(cuid())
+  slug        String          @unique
+  title       String
+  summary     String
+  domain      String
+  featured    Boolean         @default(false)
+  featuredLabel String
+  tags        ProjectTag[]
+  metrics     ProjectMetric[]
+  blocks      ProjectBlock[]
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+}
+
+model ProjectMetric {
+  id        String   @id @default(cuid())
+  label     String
+  value     String
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectTag {
+  id        String   @id @default(cuid())
+  label     String
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model ProjectBlock {
+  id        String   @id @default(cuid())
+  kind      String
+  heading   String
+  body      Json
+  order     Int
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
+model AppItem {
+  id          String   @id @default(cuid())
+  title       String
+  value       String
+  tag         String
+  icon        String
+  visible     Boolean  @default(true)
+  order       Int
+}
+
+model SystemNode {
+  id          String       @id @default(cuid())
+  title       String
+  label       String
+  caption     String
+  order       Int
+  outgoing    SystemEdge[] @relation("SourceNode")
+  incoming    SystemEdge[] @relation("TargetNode")
+}
+
+model SystemEdge {
+  id          String     @id @default(cuid())
+  label       String?
+  sourceId    String
+  targetId    String
+  source      SystemNode @relation("SourceNode", fields: [sourceId], references: [id], onDelete: Cascade)
+  target      SystemNode @relation("TargetNode", fields: [targetId], references: [id], onDelete: Cascade)
+}
+
+model MediaAsset {
+  id          String   @id @default(cuid())
+  name        String
+  mimeType    String
+  path        String
+  size        Int
+  createdAt   DateTime @default(now())
+}
+
+model ContactSubmission {
+  id          String        @id @default(cuid())
+  name        String
+  email       String
+  message     String
+  status      ContactStatus @default(NEW)
+  createdAt   DateTime      @default(now())
+}

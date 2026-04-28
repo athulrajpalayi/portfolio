@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/USER/.claude/plugins/cache/ui-ux-pro-max-skill/ui-ux-pro-max/2.0.1/.claude/skills/ui-ux-pro-max/**)",
+      "Bash(python scripts/search.py \"personal portfolio IT security AI systems modernization terminal dark cyberpunk animated immersive\" --design-system -p \"Athulraj Portfolio\" -f markdown)",
+      "Bash(python3 scripts/search.py \"personal portfolio IT security AI systems modernization terminal dark cyberpunk animated\" --design-system -p \"Athulraj Portfolio\" -f markdown)",
+      "Bash(powershell -Command \"Compress-Archive -Force -Path 'app\\\\layout.tsx','components\\\\marketing\\\\home-page-view.tsx','components\\\\motion\\\\particle-network.tsx','components\\\\marketing\\\\hero.tsx' -DestinationPath 'C:\\\\Users\\\\USER\\\\Downloads\\\\ui-cursor-particle.zip'\")"
+    ]
+  }
+}

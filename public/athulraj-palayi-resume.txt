@@ -1,0 +1,4 @@
+Athulraj Palayi Resume Placeholder
+
+This placeholder file exists so the portfolio has a real download target during development.
+Replace this file with the final PDF resume before deployment.

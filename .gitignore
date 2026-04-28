@@ -1,0 +1,11 @@
+node_modules
+.next
+coverage
+.env
+.env.local
+.env.*.local
+.env.production
+dist
+*.log
+POstgre p[ass.txt
+
