@@ -1,11 +1,22 @@
 node_modules
 .next
 coverage
+dist
+*.log
+
+# Environment / credentials — never commit
 .env
 .env.local
 .env.*.local
 .env.production
-dist
-*.log
-POstgre p[ass.txt
+*.pem
+*.key
+*pass*.txt
+*password*.txt
+*secret*.txt
 
+# Build artifacts
+*.tsbuildinfo
+
+# Archives — build output, not source
+*.zip
