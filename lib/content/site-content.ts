@@ -379,6 +379,6 @@ export const marketingContent: MarketingContent = {
     description: "For cybersecurity testing, AI-assisted product development, Android apps, WhatsApp automation, web platforms, or business workflow tools.",
     email: "imathulraj@gmail.com",
     whatsapp: "https://wa.me/971582903572",
-    linkedin: "https://www.linkedin.com/in/athulraj-palayi",
+    linkedin: "https://www.linkedin.com/in/athulrajpalayi",
   },
 };
