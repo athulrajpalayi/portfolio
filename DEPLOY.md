@@ -61,7 +61,7 @@ git add -A
 git status    # confirm "POstgre p[ass.txt" is NOT listed
 git commit -m "Initial portfolio platform"
 git branch -M main
-git remote add origin https://github.com/athulrajpalayi/portfolio-26.git
+git remote add origin https://github.com/athulrajpalayi/portfolio.git
 git push -u main
 ```
 
@@ -87,11 +87,11 @@ docker volume rm athulrajpalayi_postgres_data
 ```bash
 # If no git repo exists at /var/www/athulrajpalayi yet:
 rm -rf /var/www/athulrajpalayi
-git clone https://github.com/athulrajpalayi/portfolio-26.git /var/www/athulrajpalayi
+git clone https://github.com/athulrajpalayi/portfolio.git /var/www/athulrajpalayi
 
 # If the git repo already exists there:
 cd /var/www/athulrajpalayi
-git pull origin main
+git pull origin master
 ```
 
 ---
@@ -282,7 +282,7 @@ curl -I https://athulrajpalayi.com/ansiya/magenta/
 ```bash
 ssh root@5.223.63.213
 cd /var/www/athulrajpalayi
-git pull origin main
+git pull origin master
 
 # Rebuild only the app container (leave postgres running)
 docker compose -f docker-compose.shared-vps.yml up -d --build --no-deps app

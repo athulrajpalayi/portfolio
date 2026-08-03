@@ -71,9 +71,15 @@ npm run admin:totp            # -> ADMIN_TOTP_SECRET
 
 Dockerised behind host nginx with Let's Encrypt. Full runbook in [DEPLOY.md](DEPLOY.md); a longer annotated walkthrough is in [`docs/deployment/`](docs/deployment/).
 
+Deploys run **on the server**, not locally. After the first setup, an update is:
+
 ```bash
-docker compose -f docker-compose.prod.yml up -d
+cd /var/www/athulrajpalayi
+git pull origin master
+docker compose -f docker-compose.shared-vps.yml up -d --build --no-deps app
 ```
+
+`--no-deps app` rebuilds only the application container, leaving PostgreSQL running. `docker-compose.prod.yml` is the standalone-host variant; the live deployment shares a VPS and uses `docker-compose.shared-vps.yml`.
 
 ## License
 
